@@ -1,12 +1,4 @@
 @charset "utf-8";
-/*
- * artDialog skin
- * http://code.google.com/p/artdialog/
- * (c) 2009-2011 TangBin, http://www.planeArt.cn
- *
- * This is licensed under the GNU LGPL, version 2.1 or later.
- * For details, see: http://creativecommons.org/licenses/LGPL/2.1/
- */
  
 /* common start */
 body { _margin:0; _height:100%; /*IE6 BUG*/ }
