@@ -1,13 +1,4 @@
-/*!
- * artDialog iframeTools
- * Date: 2011-11-25 13:54
- * http://code.google.com/p/artdialog/
- * (c) 2009-2011 TangBin, http://www.planeArt.cn
- *
- * This is licensed under the GNU LGPL, version 2.1 or later.
- * For details, see: http://creativecommons.org/licenses/LGPL/2.1/
- */
- 
+
 ;(function ($, window, artDialog, undefined) {
 
 var _topDialog, _proxyDialog, _zIndex,
@@ -20,24 +11,20 @@ var _topDialog, _proxyDialog, _zIndex,
 
 $(function () {
 	!window.jQuery && document.compatMode === 'BackCompat'
-	// 涓嶆敮鎸佹€紓妯″紡锛岃鐢ㄤ富娴佺殑XHTML1.0鎴栬€匟TML5鐨凞OCTYPE鐢虫槑
 	&& alert('artDialog Error: document.compatMode === "BackCompat"');
 });
-	
-	
-/** 鑾峰彇 artDialog 鍙法绾ц皟鐢ㄧ殑鏈€楂樺眰鐨� window 瀵硅薄 */
 var _top = artDialog.top = function () {
 	var top = window,
 	test = function (name) {
 		try {
-			var doc = window[name].document;	// 璺ㄥ煙|鏃犳潈闄�
-			doc.getElementsByTagName; 			// chrome 鏈湴瀹夊叏闄愬埗
+			var doc = window[name].document;
+			doc.getElementsByTagName;
 		} catch (e) {
 			return false;
 		};
 		
 		return window[name].artDialog
-		// 妗嗘灦闆嗘棤娉曟樉绀虹涓夋柟鍏冪礌
+
 		&& doc.getElementsByTagName('frameset').length === 0;
 	};
 	
@@ -49,25 +36,14 @@ var _top = artDialog.top = function () {
 	
 	return top;
 }();
-artDialog.parent = _top; // 鍏煎v4.1涔嬪墠鐗堟湰锛屾湭鏉ョ増鏈皢鍒犻櫎姝�
+artDialog.parent = _top;
 
 
 _topDialog = _top.artDialog;
 
-
-// 鑾峰彇椤跺眰椤甸潰瀵硅瘽妗嗗彔鍔犲€�
 _zIndex = function () {
 	return _topDialog.defaults.zIndex;
 };
-
-
-
-/**
- * 璺ㄦ鏋舵暟鎹叡浜帴鍙�
- * @see		http://www.planeart.cn/?p=1554
- * @param	{String}	瀛樺偍鐨勬暟鎹悕
- * @param	{Any}		灏嗚瀛樺偍鐨勪换鎰忔暟鎹�(鏃犳椤瑰垯杩斿洖琚煡璇㈢殑鏁版嵁)
- */
 artDialog.data = function (name, value) {
 	var top = artDialog.top,
 		cache = top[_data] || {};
@@ -80,49 +56,30 @@ artDialog.data = function (name, value) {
 	};
 	return cache;
 };
-
-
-/**
- * 鏁版嵁鍏变韩鍒犻櫎鎺ュ彛
- * @param	{String}	鍒犻櫎鐨勬暟鎹悕
- */
 artDialog.removeData = function (name) {
 	var cache = artDialog.top[_data];
 	if (cache && cache[name]) delete cache[name];
 };
 
-
-/** 璺ㄦ鏋舵櫘閫氬璇濇 */
 artDialog.through = _proxyDialog = function () {
 	var api = _topDialog.apply(this, arguments);
-		
-	// 缂撳瓨浠庡綋鍓� window锛堝彲鑳戒负iframe锛夎皟鍑烘墍鏈夎法妗嗘灦瀵硅瘽妗嗭紝
-	// 浠ヤ究璁╁綋鍓� window 鍗歌浇鍓嶅幓鍏抽棴杩欎簺瀵硅瘽妗嗐€�
-	// 鍥犱负iframe娉ㄩ攢鍚庝篃浼氫粠鍐呭瓨涓垹闄ゅ叾鍒涘缓鐨勫璞★紝杩欐牱鍙互闃叉鍥炶皟鍑芥暟鎶ラ敊
+
 	if (_top !== window) artDialog.list[api.config.id] = api;
 	return api;
 };
 
-// 妗嗘灦椤甸潰鍗歌浇鍓嶅叧闂墍鏈夌┛瓒婄殑瀵硅瘽妗�
+
 _top !== window && $(window).bind('unload', function () {
 	var list = artDialog.list, config;
 	for (var i in list) {
 		if (list[i]) {
 			config = list[i].config;
-			if (config) config.duration = 0; // 鍙栨秷鍔ㄧ敾
+			if (config) config.duration = 0;
 			list[i].close();
 			//delete list[i];
 		};
 	};
 });
-
-
-/**
- * 寮圭獥 (iframe)
- * @param	{String}	鍦板潃
- * @param	{Object}	閰嶇疆鍙傛暟. 杩欓噷浼犲叆鐨勫洖璋冨嚱鏁版帴鏀剁殑绗�1涓弬鏁颁负iframe鍐呴儴window瀵硅薄
- * @param	{Boolean}	鏄惁鍏佽缂撳瓨. 榛樿true
- */
 artDialog.open = function (url, options, cache) {
 	options = options || {};
 	
@@ -151,7 +108,7 @@ artDialog.open = function (url, options, cache) {
 			iwin = iframe.contentWindow;
 			$idoc = $(iwin.document);
 			ibody = iwin.document.body;
-		} catch (e) {// 璺ㄥ煙
+		} catch (e) {
 			iframe.style.cssText = loadCss;
 			
 			aConfig.follow
@@ -163,7 +120,7 @@ artDialog.open = function (url, options, cache) {
 			return;
 		};
 		
-		// 鑾峰彇iframe鍐呴儴灏哄
+
 		iWidth = aConfig.width === 'auto'
 		? $idoc.width() + (_isIE6 ? 0 : parseInt($(ibody).css('marginLeft')))
 		: aConfig.width;
@@ -171,14 +128,12 @@ artDialog.open = function (url, options, cache) {
 		iHeight = aConfig.height === 'auto'
 		? $idoc.height()
 		: aConfig.height;
-		
-		// 閫傚簲iframe灏哄
+
 		setTimeout(function () {
 			iframe.style.cssText = loadCss;
-		}, 0);// setTimeout: 闃叉IE6~7瀵硅瘽妗嗘牱寮忔覆鏌撳紓甯�
+		}, 0);
 		api.size(iWidth, iHeight);
-		
-		// 璋冩暣瀵硅瘽妗嗕綅缃�
+
 		aConfig.follow
 		? api.follow(aConfig.follow)
 		: api.position(aConfig.left, aConfig.top);
